@@ -8,14 +8,11 @@ import random
 
 
 def start_game():
-    high_score = 100
+    high_score = 10
     play_again = True
 
     while play_again:
-        if high_score == 100:
-            print(f"There is no high score yet. Play the game once to set the high score!")
-        elif high_score != 100:
-            print(f"The high score is {high_score}. See if you can beat it!")
+        print(f"The high score is {high_score}. See if you can beat it!")
         print()
         print("""Welcome to the number guessing game! In this game, you will have to guess a number between 1 and 10.
         If you guess incorrectly, you will be given a hint if the number is higher or lower than what you guessed.
@@ -27,8 +24,13 @@ def start_game():
         while playing:
             user_guess = 0
             while user_guess < 1 or user_guess > 10:
-                user_guess = int(input("Please guess a number between 1 and 10: "))
-                num_tries += 1
+                try:
+                    user_guess = int(input("Please guess a number between 1 and 10: "))
+                    if user_guess < 1 or user_guess > 10:
+                        raise ValueError
+                except ValueError:
+                    print("Your guess must be a number between 1 and 10!")
+            num_tries += 1
             if user_guess == num_to_guess:
                 print(f"You did it! You guessed the number, which was {num_to_guess}! It took you {num_tries} tries to guess it!")
                 break
